@@ -1,0 +1,29 @@
+{
+    "name": "cordova-plugin-fzpush",
+    "version": "1.0.0",
+    "description": "",
+    "cordova": {
+      "id": "cordova-plugin-fzpush",
+      "platforms": [
+        "android",
+        "ios"
+      ]
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/huangenai"
+    },
+    "bugs": {
+      "url": "https://github.com/huangenai"
+    },
+    "keywords": [
+      "cordova",
+      "push"
+    ],
+    "author": {
+      "name": "huangenai",
+      "email": "937869175@qq.com"
+    },
+    "license": "MIT"
+  }
+  
