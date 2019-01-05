@@ -2,10 +2,8 @@
 <plugin id="cordova-plugin-fzpush" version="1" 
     xmlns="http://apache.org/cordova/ns/plugins/1.0" 
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- <js-module name="cordova.plugin.fzpush" src="www/cordova-plugin-fzpush.js">
-        <clobbers target="cordova.plugins.fzpush" />
-    </js-module> -->
 	<dependency id="com.red_folder.phonegap.plugin.backgroundservice" url="https://github.com/Red-Folder/bgs-core.git"/>
+    <dependency id="cordova-plugin-aps-notification" url="https://github.com/huangenai/cordova-plugin-aps-notification.git"/>
 
        <!-- android -->
     <platform name="android">
