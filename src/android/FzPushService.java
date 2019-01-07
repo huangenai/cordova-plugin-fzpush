@@ -199,15 +199,18 @@ public class FzPushService extends BackgroundService {
             Log.i("fzServicePush", "received topic : " + topic);
             String payload = new String(message.getPayload());
             Log.i("fzServicePush", "received msg : " + payload);
-			JSONObject jsonObjSplit = new JSONObject(payload);
-			String title=jsonObjSplit.getString("title");
-			String content=jsonObjSplit.getString("content");
-			sendNotification(title,content);
+
+			sendNotification(payload);
 			} catch (JSONException e) {
             }
         }
 
-		private  void sendNotification(String title,String text){
+		private  void sendNotification(String payload){
+
+			JSONObject jsonObjSplit = new JSONObject(payload);
+			String title=jsonObjSplit.getString("title");
+			String content=jsonObjSplit.getString("content");
+
             NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             NotificationCompat.Builder builder = null;
 
@@ -242,7 +245,7 @@ public class FzPushService extends BackgroundService {
 			 //创建一个意图
 			Intent intent=new Intent();  
 			intent.setClassName(FzPushService.this.appid, FzPushService.this.appid+".MainActivity");  
-
+			intent.putExtra("payload", payload);
 			// Intent intent = getPackageManager().getLaunchIntentForPackage("com.hea.test");
             PendingIntent pIntent = PendingIntent.getActivity(getApplicationContext(), 1, intent, 0);
 			//setContentIntent  将意图设置到通知上
