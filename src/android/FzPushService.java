@@ -200,16 +200,18 @@ public class FzPushService extends BackgroundService {
             String payload = new String(message.getPayload());
             Log.i("fzServicePush", "received msg : " + payload);
 
-			sendNotification(payload);
-			} catch (JSONException e) {
-            }
-        }
-
-		private  void sendNotification(String payload){
 
 			JSONObject jsonObjSplit = new JSONObject(payload);
 			String title=jsonObjSplit.getString("title");
 			String content=jsonObjSplit.getString("content");
+
+			sendNotification(title,content,payload);
+			} catch (JSONException e) {
+            }
+        }
+
+		private  void sendNotification(String title,String content,String payload){
+
 
             NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             NotificationCompat.Builder builder = null;
@@ -235,7 +237,7 @@ public class FzPushService extends BackgroundService {
 			//setContentTitle 通知栏通知的标题
 			builder.setContentTitle(title);
 			//setContentText  通知栏通知的详细内容
-            builder.setContentText(text);
+            builder.setContentText(content);
 			//setAutoCancel 点击通知的清除按钮是否清除该消息（true/false）
             builder.setAutoCancel(true);
 			//setLargeIcon  通知消息上的大图标
