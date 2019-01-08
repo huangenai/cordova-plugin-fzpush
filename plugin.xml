@@ -3,7 +3,6 @@
 	xmlns="http://apache.org/cordova/ns/plugins/1.0" 
 	xmlns:android="http://schemas.android.com/apk/res/android">
 	<dependency id="com.red_folder.phonegap.plugin.backgroundservice" url="https://github.com/Red-Folder/bgs-core.git"/>
-	<!-- <dependency id="cordova-plugin-aps-notification" url="https://github.com/huangenai/cordova-plugin-aps-notification.git"/> -->
 
 	<js-module src="www/cordova-plugin-fzpush.js" name="fzpush">
 		<clobbers target="cordova.plugins.fzpush" />
@@ -14,18 +13,13 @@
 	</js-module>
 
 	<js-module src="www/push.js" name="PushNotification">
-		<clobbers target="cordova.plugins.PushNotification"/>
+		<clobbers target="PushNotification"/>
 	</js-module>
 
 	<platform name="ios">
-		<config-file parent="/*" target="config.xml">
+		<config-file target="config.xml" parent="/*">
 			<feature name="PushNotification">
 				<param name="ios-package" value="PushPlugin"/>
-			</feature>
-		<!-- </config-file>
-		<config-file parent="/*" target="config.xml"> -->
-			<feature name="ApsNotificationPlugin">
-				<param name="ios-package" value="CDVApsNotification" />
 			</feature>
 		</config-file>
 		<config-file target="*-Info.plist" parent="UIBackgroundModes">
@@ -43,8 +37,6 @@
 		<source-file src="src/ios/PushPlugin.m"/>
 		<header-file src="src/ios/AppDelegate+notification.h"/>
 		<header-file src="src/ios/PushPlugin.h"/>
-		<header-file src="src/ios/CDVApsNotification.h" />
-		<source-file src="src/ios/CDVApsNotification.m" />
 		<framework src="FirebaseMessaging" type="podspec" spec="~> 2.0.0"/>
 		<framework src="PushKit.framework"/>
 	</platform>
