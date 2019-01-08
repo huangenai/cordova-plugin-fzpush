@@ -52,6 +52,7 @@
 				<param name="android-package" value="cordova.plugin.aps.notification.ApsNotification" />
 			</feature>
 		</config-file>
+        <config-file parent="/*" target="AndroidManifest.xml"></config-file>
 		<framework src="org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0" />
 		<framework src="com.android.support:support-v4:26.0.1" />
 		<source-file src="src/android/FzPushService.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice/sample" />
