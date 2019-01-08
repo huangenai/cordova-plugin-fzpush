@@ -14,7 +14,7 @@
 	</js-module>
 
 	  <js-module src="www/push.js" name="PushNotification">
-    <clobbers target="PushNotification"/>
+    <clobbers target="cordova.plugins.PushNotification"/>
   </js-module>
 	
 	<platform name="ios">
