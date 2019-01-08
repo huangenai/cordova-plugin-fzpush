@@ -84,6 +84,7 @@ public class FzPushService extends BackgroundService {
 			result.put("topic",this.topic);
 			result.put("qos",this.qos);
 			result.put("appid",this.appid);
+			result.put("clientId",this.clientId);
 		} catch (JSONException e) {
 		}
 		
