@@ -27,3 +27,18 @@ var serviceName = 'com.red_folder.phonegap.plugin.backgroundservice.sample.FzPus
  */
 var factory = require('com.red_folder.phonegap.plugin.backgroundservice.BackgroundService');
 module.exports = factory.create(serviceName);
+
+
+
+var exec = require('cordova/exec'),ApsNotification = function() {};
+ApsNotification.prototype.getCordovaIntent = function(successCallback, failureCallback) {
+    return exec (
+        successCallback,
+        failureCallback,
+        "ApsNotification",
+        "getCordovaIntent",
+        []
+    );
+};
+
+module.exports = new ApsNotification();

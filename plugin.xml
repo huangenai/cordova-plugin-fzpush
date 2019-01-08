@@ -5,14 +5,26 @@
 	<dependency id="com.red_folder.phonegap.plugin.backgroundservice" url="https://github.com/Red-Folder/bgs-core.git"/>
     <dependency id="cordova-plugin-aps-notification" url="https://github.com/huangenai/cordova-plugin-aps-notification.git"/>
 
+	<js-module src="www/cordova-plugin-fzpush.js" name="fzpush">
+			<clobbers target="cordova.plugins.fzpush" />
+		</js-module>
+	<platform name="ios">
+		<config-file parent="/*" target="config.xml">
+			<feature name="ApsNotificationPlugin">
+				<param name="ios-package" value="CDVApsNotification" />
+			</feature>
+		</config-file>
+		<header-file src="src/ios/CDVApsNotification.h" />
+		<source-file src="src/ios/CDVApsNotification.m" />
+	</platform>
        <!-- android -->
     <platform name="android">
 
 		<asset src="www/FzPushService.html" target="FzPushService.html" />
 
-		<js-module src="www/cordova-plugin-fzpush.js" name="fzpush">
+		<!-- <js-module src="www/cordova-plugin-fzpush.js" name="fzpush">
 			<clobbers target="cordova.plugins.fzpush" />
-		</js-module>
+		</js-module> -->
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
   
@@ -21,11 +33,13 @@
                     <action android:name="com.red_folder.phonegap.plugin.backgroundservice.sample.FzPushService"/> 
                 </intent-filter>     
             </service>
-            
+            <feature name="ApsNotification">
+				<param name="android-package" value="cordova.plugin.aps.notification.ApsNotification" />
+			</feature>
         </config-file>
         <framework src="org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0" />
 		<framework src="com.android.support:support-v4:26.0.1" />
         <source-file src="src/android/FzPushService.java" target-dir="src/com/red_folder/phonegap/plugin/backgroundservice/sample" />
-			 
+		<source-file src="src/android/ApsNotification.java" target-dir="src/cordova.plugin.aps.notification/ApsNotification" />
     </platform>
 </plugin>
