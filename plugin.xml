@@ -8,6 +8,15 @@
 	<js-module src="www/cordova-plugin-fzpush.js" name="fzpush">
 		<clobbers target="cordova.plugins.fzpush" />
 	</js-module>
+
+	<js-module name="apsNotificationPlugin" src="www/apsNotification.js">
+		<clobbers target="cordova.plugins.apsNotification" />
+	</js-module>
+
+	  <js-module src="www/push.js" name="PushNotification">
+    <clobbers target="PushNotification"/>
+  </js-module>
+	
 	<platform name="ios">
 		<config-file parent="/*" target="config.xml">
 			<feature name="ApsNotificationPlugin">
