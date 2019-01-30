@@ -63,7 +63,7 @@ public class FzPushService extends BackgroundService {
 	@Override
 	protected JSONObject doWork() {
 		JSONObject result = new JSONObject();
-		// this.clientId = MqttClient.generateClientId();
+		this.clientId = MqttClient.generateClientId();
 		if (this.client == null || !this.client.isConnected()) {
 			Log.d("fsServicePush", "clientId ：" + this.clientId);
 			connect();
@@ -115,10 +115,6 @@ public class FzPushService extends BackgroundService {
 
 			if (config.has("appid")) {
 				this.appid = config.getString("appid");
-			}
-
-			if(config.has("clientId")){
-				this.appid=config.getString("clientId");
 			}
 		} catch (JSONException e) {
 		}
