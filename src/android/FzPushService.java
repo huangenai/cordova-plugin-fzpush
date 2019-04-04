@@ -35,6 +35,16 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.security.*;
+
+
 import static android.app.Notification.BADGE_ICON_SMALL;
 
 import com.red_folder.phonegap.plugin.backgroundservice.BackgroundService;
@@ -50,6 +60,7 @@ public class FzPushService extends BackgroundService {
 	private String topic = "";
 	private String qos = "";
 	private String appid = "";
+	private String config="";
 
 	private MqttClient client;
 	private MqttConnectOptions connectOptions;
@@ -63,11 +74,11 @@ public class FzPushService extends BackgroundService {
 	@Override
 	protected JSONObject doWork() {
 		JSONObject result = new JSONObject();
-		this.clientId = MqttClient.generateClientId();
-		if (this.client == null || !this.client.isConnected()) {
-			Log.d("fsServicePush", "clientId ：" + this.clientId);
+		//this.clientId = MqttClient.generateClientId();
+		//if (this.client == null || !this.client.isConnected()) {
+		//	Log.d("fsServicePush", "clientId ：" + this.clientId);
 			connect();
-		}
+		//}
 		return result;
 
 	}
@@ -84,6 +95,7 @@ public class FzPushService extends BackgroundService {
 			result.put("qos", this.qos);
 			result.put("appid", this.appid);
 			result.put("clientId", this.clientId);
+			result.put("config", this.config);
 		} catch (JSONException e) {
 		}
 
@@ -93,6 +105,10 @@ public class FzPushService extends BackgroundService {
 	@Override
 	protected void setConfig(JSONObject config) {
 		try {
+			if(config.has("config")){
+				this.config = config.getString("config");
+			}
+
 			if (config.has("host")) {
 				this.host = config.getString("host");
 			}
@@ -116,9 +132,12 @@ public class FzPushService extends BackgroundService {
 			if (config.has("appid")) {
 				this.appid = config.getString("appid");
 			}
+
+			if(config.has("clientId")){
+				this.clientId = config.getString("clientId");
+			}
 		} catch (JSONException e) {
 		}
-
 	}
 
 	@Override
@@ -200,9 +219,13 @@ public class FzPushService extends BackgroundService {
 				Log.i("fzServicePush", "received msg : " + payload);
 
 				JSONObject jsonObjSplit = new JSONObject(payload);
-				String title = jsonObjSplit.getString("title");
-				String content = jsonObjSplit.getString("content");
-
+				String title = jsonObjSplit.getJSONObject("data").getString("title");
+				String content = jsonObjSplit.getJSONObject("data").getString("content");
+				Log.i("fzServicePush", "数据测试开始");
+				String pay =jsonObjSplit.getJSONObject("data").getString("payload");
+				Log.i("fzServicePush", "payload: " + pay);
+				JSONObject payloadObjSplit = new JSONObject(payload);
+				SendPostRequest(payloadObjSplit.getJSONObject("data").getString("PUSHAPPID"));
 				sendNotification(title, content, payload);
 			} catch (JSONException e) {
 			}
@@ -264,4 +287,72 @@ public class FzPushService extends BackgroundService {
 			Log.i(TAG, "deliveryComplete");
 		}
 	};
+
+	public String SendPostRequest(String noid){
+		Log.i("fzServicePush","noid："+noid);
+		HttpURLConnection conn=null;
+		try {
+				JSONObject sendObjSplit = new JSONObject(this.config);
+				String apptime=getStringToday();
+				Log.i("fzServicePush","apptime："+apptime);
+
+				String sign="app_id="+sendObjSplit.getJSONObject("data").getString("appId")+"&app_secret="+sendObjSplit.getJSONObject("data").getString("appSecret")+"&app_time="+apptime+"&noId="+noid;
+				Log.i("fzServicePush","sign："+sign);
+
+				sign=getMd5Value(sign).toUpperCase();
+				Log.i("fzServicePush","sign："+sign);
+
+				URL url = new URL(sendObjSplit.getJSONObject("data").getString("serviceUrl")+noid);
+				conn = (HttpURLConnection) url.openConnection();
+				conn.setRequestMethod("POST");
+				conn.setRequestProperty("app_id", sendObjSplit.getJSONObject("data").getString("appId"));
+				conn.setRequestProperty("app_time",apptime);
+				conn.setRequestProperty("app_sign", sign);
+
+				conn.setRequestProperty("ser-Agent", "Fiddler");
+				conn.setRequestProperty("Content-Type", "application/json");
+				conn.setConnectTimeout(5 * 1000);
+				if(HttpURLConnection.HTTP_OK==conn.getResponseCode()){
+						Log.i("fzServicePush","应用收到收到消息");
+					}else {
+						Log.i("fzServicePush","post请求失败");
+				}
+		} catch (Exception e) {
+			Log.i("fzServicePush","Exception："+e);
+				e.printStackTrace();
+		}
+		finally {
+				conn.disconnect();
+		}
+		return null;
+	}
+	
+	public String getStringToday() {
+		Date currentTime = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+		String dateString = formatter.format(currentTime);
+		return dateString;
+	}
+
+	public String getMd5Value(String sSecret) {
+    try {
+        MessageDigest bmd5 = MessageDigest.getInstance("MD5");
+        bmd5.update(sSecret.getBytes());
+        int i;
+        StringBuffer buf = new StringBuffer();
+        byte[] b = bmd5.digest();
+        for (int offset = 0; offset < b.length; offset++) {
+            i = b[offset];
+            if (i < 0)
+                i += 256;
+            if (i < 16)
+                buf.append("0");
+            buf.append(Integer.toHexString(i));
+        }
+        return buf.toString();
+    } catch (NoSuchAlgorithmException e) {
+        e.printStackTrace();
+    }
+    return "";
+}
 }
