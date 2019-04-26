@@ -15,10 +15,7 @@
 3.  适用人员 : 酆泽开发人员
 4.  适用产品: 以TypeScript编码的程序
 
-​    
-​    
 #### 1  命名规则
-
  - 使用PascalCase为类型，枚举值命名。
     -单字之间不以空格断开或连接号（-）、底线（_）连结。
     -每一个单字的首字母都采用大写字母的命名格式。
@@ -32,9 +29,7 @@
 - 避免歧义。
 - 如果一个单词对不同对象有不同的含义，不能为了’一致性’而使用，而是应该对特定的类型选择最为合适的名字。比如两个数字相加，用’add’；向一个列表中加入元素，似乎也可以用’add’，但意义却与上面的二者’相加’明显不同。故应考虑’append’
 
-​   
 #### 2  组件
-​    
 - 1个文件对应一个逻辑组件 （比如：解析器，检查器）。
 - 不要添加新的文件。 :)
 - .generated.*后缀的文件是自动生成的，不要手动改它。
@@ -59,7 +54,7 @@
 */
 ```
 
-#### 4  代码风格
+#### 5  代码风格
 
 - 使用箭头函数（arrow function，即 lambda 表达式）代替匿名函数
 - 仅当必要时才在箭头函数的参数列表中使用括号。例如：
@@ -87,14 +82,14 @@ function f(x: number, y: string): void { }
 - else 不与之前的关大括号同行，应另起一行
 - 使用4个空格进行缩紧
 
-#### 4  一般约定
+#### 6  一般约定
 
 - 使用由其他组件创建的对象（例如Node、Symbol等）时，将其视作不可变的（immutable ），不要修改它们
 - 数组在创建之后视作不可变的（immutable ）
 
 
-#### 其他
+#### 7  其他
 - null和undefined，使用undefined，不要使用 null。
 - 禁用var，用let和const代替
 
-### more [ (https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md) ]
+#### more [ (https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md) ]
