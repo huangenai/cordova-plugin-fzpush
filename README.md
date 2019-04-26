@@ -16,7 +16,7 @@
 4.  适用产品: 以TypeScript编码的程序
 
 #### 1  命名规则
- - 使用PascalCase为类型，枚举值命名。
+- 使用PascalCase为类型，枚举值命名。
     -单字之间不以空格断开或连接号（-）、底线（_）连结。
     -每一个单字的首字母都采用大写字母的命名格式。
     -第一个单字首字母采用大写字母；后续单字的首字母亦用大写字母，例如：FirstName、LastName。
@@ -47,11 +47,11 @@
 - 多行注释（/ * * /） - 这些注释可能跨越多行
 
 ```
-//this is single line comment 
+  //this is single line comment 
  
-/* This is a  
-   Multi-line comment 
-*/
+  /* This is a  
+     Multi-line comment 
+  */
 ```
 
 #### 5  代码风格
@@ -60,24 +60,24 @@
 - 仅当必要时才在箭头函数的参数列表中使用括号。例如：
 
 ```
-✘ (x) => x + x
-✔ x => x + x
-✔ (x, y) => x + y
-✔ <T>(x: T, y: T) => x === y
+  ✘ (x) => x + x
+  ✔ x => x + x
+  ✔ (x, y) => x + y
+  ✔ <T>(x: T, y: T) => x === y
 ```
 - 总是使用大括号括起循环体和条件体
 - 开大括号总是放在其关联语句的同一行（大括号不换行）
 - 圆括号内侧不留空格；在圆括号内的逗号、冒号和分号后空一格。例如：
 
 ```
-for (var i = 0, n = str.length; i < 10; i++) { }
-if (x < 10) { }
-function f(x: number, y: string): void { }
+  for (var i = 0, n = str.length; i < 10; i++) { }
+  if (x < 10) { }
+  function f(x: number, y: string): void { }
 ```
 - 每个定义使用单独的语句。例如：
 ```
-✔ var x = 1; var y = 2;
-✘ var x = 1, y = 2;
+  ✔ var x = 1; var y = 2;
+  ✘ var x = 1, y = 2;
 ```
 - else 不与之前的关大括号同行，应另起一行
 - 使用4个空格进行缩紧
