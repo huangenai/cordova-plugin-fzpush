@@ -1,24 +1,32 @@
-[TOC]
-
 # TypeScript 代码规范
 
 #### 集成步骤
 
 ##### 1.1  vscode 安装插件eslint
 
+
 ##### 1.2  vscode 修改setting.json
 
-###### vscode需要在「文件 => 首选项 => 设置」中
+###### 需要在「文件 => 首选项 => 设置」中添加以下配置
+```
+        "eslint.validate": [
+                "javascript",
+                "javascriptreact",
+                "typescript"
+        ]
+```
+
 
 ##### 1.3  新建项目 ng new my-app
 
+
 ##### 1.4  项目中根目录下新建文件 .eslintrc.js
+
 
 ##### 1.5  执行命令 安装相关插件
 
 ```
 npm install --save-dev eslint typescript-eslint-parser eslint-plugin-typescript eslint-config-alloy
-
 ```
 
 
