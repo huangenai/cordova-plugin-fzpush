@@ -91,5 +91,9 @@ function f(x: number, y: string): void { }
 #### 7  其他
 - null和undefined，使用undefined，不要使用 null。
 - 禁用var，用let和const代替
+- 禁止给类赋值
+- 禁止修改const声明的变量
+- 禁止使用new Function new Object() new require，禁止使用new创建包装实例，new String new Boolean new Number
+- 必须使用 === 或 !==，禁止使用 == 或 !=，与 null 比较时除外
 
 #### more [ (https://github.com/Microsoft/TypeScript/blob/master/doc/spec.md) ]
