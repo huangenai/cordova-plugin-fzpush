@@ -13,6 +13,7 @@ var no = false;         // 隐式输入
 
 ### Number
 - TypeScript中的所有数字都是浮点值
+
 例子
 ```例子
 let decimal : number  =  6 ;
