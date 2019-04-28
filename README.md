@@ -21,7 +21,6 @@ var x: number;
 var y = 0;              
 var z = 123.456;        
 var s = z.toFixed(2);   
-
 ```
 
 ### String
@@ -45,12 +44,13 @@ let list: Array<number> = [1, 2, 3];
 ```
 
 ### Tuple
+- 已知元素数量和类型的数组，各元素的类型不必相同
+
 例子
 ```例子
 let x: [string, number];
 x = ["hello", 10];
 x[0].substr(1)
-
 ```
 
 ### Enum
