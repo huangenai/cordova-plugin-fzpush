@@ -132,12 +132,12 @@ function f(input: boolean) {
     return b;//错误
 }
 ```
+  - 先定义后使用
   - 重定义及屏蔽，即使定义多个仍然
 ```
 let x = 10;
 let x = 20; // 错误，不能在1个作用域里多次声明`x`
 ```
-  - 先定义后使用
 - const 声明
   - 值不可变
 ```
@@ -153,7 +153,7 @@ let x = 20; // 错误，不能在1个作用域里多次声明`x`
 
 
 ## 接口
-在TypeScript里，interface 是比较常用的。其作用是为给类型命名和给你的代码或第三方代码定义契约。
+在TypeScript里，interface 是比较常用的。作用就是为这些类型命名和为你的代码或第三方代码定义契约
 
 例子
 ```例子
@@ -177,7 +177,7 @@ interface LabelledValue {
 }
 ```
 
-- 可选属性
+- 只读属性
 ```
 interface LabelledValue {
   readonly x: string;//赋值后不可改变。
@@ -199,6 +199,10 @@ let myStr: string = myArray[0];// "Bob"
 
 - 函数类型
 ```
+interface SearchFunc {
+  (source: string, subString: string): boolean;
+}
+
 let mySearch: SearchFunc;
 mySearch = function(src: string, sub: string): boolean {
   let result = src.search(sub);
@@ -206,7 +210,8 @@ mySearch = function(src: string, sub: string): boolean {
 }
 ```
 
-- 类类型
+- 类类型，实现接口
+```
 interface ClockInterface {
     currentTime: Date;
 }
@@ -215,6 +220,7 @@ class Clock implements ClockInterface {
     currentTime: Date;
     constructor(h: number, m: number) { }
 }
+```
 
 - 继承接口
 ```
@@ -278,16 +284,15 @@ class Greeter {
         return "Hello, " + this.greeting;
     }
 }
+
+let greeter = new Greeter("world");
 ```
 与C#或Java非常相似，不多做备注。
 - 继承
-- public，private,protected,readonly修饰符
+- public,private,protected,readonly修饰符
 - get set
 - 静态属性
 - 抽象类
-
-
-let greeter = new Greeter("world");
 
 ##  函数
 例
@@ -297,27 +302,32 @@ myAdd(x: number, y: number):number{
 }
 
 let myAdd: (x: number, y: number) => number =function(x: number, y: number): number { return x + y; };
+```
 
-//可选参数
+- 可选参数
+```
 function buildName(firstName: string, lastName?: string) {
     if (lastName)
         return firstName + " " + lastName;
     else
         return firstName;
 }
-
-//默认初始化的参数
+```
+- 默认初始化的参数
+```
 function buildName(firstName: string, lastName = "Smith") {
     return firstName + " " + lastName;
 }
+```
 
-//剩余参数
+- 剩余参数
+  -必要参数，默认参数和可选参数有个共同点：它们表示某一个参数。 有时，你想同时操作多个参数，或者你并不知道会有多少参数传递进来。 在JavaScript里，你可以使用 arguments来访问所有传入的参数。
+```
 function buildName(firstName: string, ...restOfName: string[]) {
   return firstName + " " + restOfName.join(" ");
 }
 
 let employeeName = buildName("Joseph", "Samuel", "Lucas", "MacKinzie");
-
 ```
 
 ##  泛型
