@@ -400,3 +400,97 @@ enum BooleanLikeHeterogeneousEnum {
     Yes = "YES",
 }
 ```
+
+## 迭代器和生成器
+当一个对象实现了Symbol.iterator属性时，我们认为它是可迭代的。 一些内置的类型如 Array，Map，Set，String，Int32Array，Uint32Array等都已经实现了各自的Symbol.iterator。 对象上的 Symbol.iterator函数负责返回供迭代的值。
+
+- for..of vs. for..in 语句
+for..of会遍历可迭代的对象，调用对象上的Symbol.iterator方法。for..of和for..in均可迭代一个列表；但是用于迭代的值却不同，for..in迭代的是对象的 键 的列表，而for..of则迭代对象的键对应的值。
+```
+let list = [4, 5, 6];
+
+for (let i in list) {
+    console.log(i); // "0", "1", "2",
+}
+
+for (let i of list) {
+    console.log(i); // "4", "5", "6"
+}
+```
+
+##  模块
+模块在其自身的作用域里执行，而不是在全局作用域里；这意味着定义在一个模块里的变量，函数，类等等在模块外部是不可见的，除非你明确地使用export形式之一导出它们。 相反，如果想使用其它模块导出的变量，函数，类，接口等的时候，你必须要导入它们，可以使用 import形式之一。
+模块是自声明的；两个模块之间的关系是通过在文件级别上使用imports和exports建立的。
+
+- 导出
+  - 导出声明
+  任何声明（比如变量，函数，类，类型别名或接口）都能够通过添加export关键字来导出
+  
+  ```
+  export interface StringValidator {
+    isAcceptable(s: string): boolean;
+  }
+  
+  export const numberRegexp = /^[0-9]+$/;
+
+  export class ZipCodeValidator implements StringValidator {
+      isAcceptable(s: string) {
+          return s.length === 5 && numberRegexp.test(s);
+      }
+  }
+  ```
+  - 导出语句
+  ```
+  export class ZipCodeValidator implements StringValidator {
+      isAcceptable(s: string) {
+          return s.length === 5 && numberRegexp.test(s);
+      }
+  }
+  
+  export { ZipCodeValidator };
+  ```
+  - 重新导出
+
+  ```
+  export class ParseIntBasedZipCodeValidator {
+    isAcceptable(s: string) {
+        return s.length === 5 && parseInt(s).toString() === s;
+    }
+  }
+
+  // 导出原先的验证器但做了重命名
+  export {ZipCodeValidator as RegExpBasedZipCodeValidator} from "./ZipCodeValidator";
+  
+  //一个模块可以包裹多个模块，并把他们导出的内容联合在一起通过语法：export * from "module"
+  ```
+- 导入
+  - 导入一个模块中的某个导出内容
+  ```
+  import { ZipCodeValidator } from "./ZipCodeValidator";
+  
+  let myValidator = new ZipCodeValidator();
+  
+  //可以对导入内容重命名
+  import { ZipCodeValidator as ZCV } from "./ZipCodeValidator";
+  let myValidator = new ZCV();
+  ```
+  - 将整个模块导入到一个变量，并通过它来访问模块的导出部分
+  ```
+  import * as validator from "./ZipCodeValidator";
+  let myValidator = new validator.ZipCodeValidator();
+  ```
+  - 默认导出
+   ```
+   //导出
+   export default "123";
+   //导入
+   import num from "./OneTwoThree";
+   //使用
+   console.log(num); // "123"
+   ```
+##  模块规范 
+- 尽可能在顶层导出 
+- 如果只导出单个 class or function 使用 export default 
+- 导入时请明确的列出导入的名字 
+- 文件只有一个export class或export function （考虑使用export default）
+
