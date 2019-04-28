@@ -306,7 +306,7 @@ let myAdd: (x: number, y: number) => number =function(x: number, y: number): num
 
 - 可选参数
 ```
-function buildName(firstName: string, lastName?: string) {
+buildName(firstName: string, lastName?: string) {
     if (lastName)
         return firstName + " " + lastName;
     else
@@ -315,7 +315,7 @@ function buildName(firstName: string, lastName?: string) {
 ```
 - 默认初始化的参数
 ```
-function buildName(firstName: string, lastName = "Smith") {
+buildName(firstName: string, lastName = "Smith") {
     return firstName + " " + lastName;
 }
 ```
@@ -323,7 +323,7 @@ function buildName(firstName: string, lastName = "Smith") {
 - 剩余参数
   -必要参数，默认参数和可选参数有个共同点：它们表示某一个参数。 有时，你想同时操作多个参数，或者你并不知道会有多少参数传递进来。 在JavaScript里，你可以使用 arguments来访问所有传入的参数。
 ```
-function buildName(firstName: string, ...restOfName: string[]) {
+buildName(firstName: string, ...restOfName: string[]) {
   return firstName + " " + restOfName.join(" ");
 }
 
@@ -333,9 +333,8 @@ let employeeName = buildName("Joseph", "Samuel", "Lucas", "MacKinzie");
 ##  泛型
 - 软件工程中，我们不仅要创建一致的定义良好的API，同时也要考虑可重用性。 组件不仅能够支持当前的数据类型，同时也能支持未来的数据类型，这在创建大型系统时为你提供了十分灵活的功能。在像C#和Java这样的语言中，可以使用泛型来创建可重用的组件，一个组件可以支持多种类型的数据。 这样用户就可以以自己的数据类型来使用组件
 
-例子
+- 方法
 ```
-//方法
 identity<T>(arg: T): T {
     return arg;
 }
@@ -353,7 +352,7 @@ interface GenericIdentityFn {
     <T>(arg: T): T;
 }
 
-function identity<T>(arg: T): T {
+identity<T>(arg: T): T {
     return arg;
 }
 
