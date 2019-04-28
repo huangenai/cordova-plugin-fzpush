@@ -2,6 +2,7 @@
 
 ## 类型
 - 布尔基元类型对应于类似命名的JavaScript基元类型，并表示true或false的逻辑值。
+<br/>
 例子
 ```例子
 var b: boolean;         // Explicitly typed  
