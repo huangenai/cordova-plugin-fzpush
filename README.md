@@ -81,8 +81,8 @@ list[1] = 100;
 - void 没有任何类型,可以将此视为不返回值的函数的返回类型.声明类型的变量void是没有用的。
 例子
 ```例子
-function warnUser（）： void {
-     console。log（“这是我的警告信息”）; 
+function warnUser(): void {
+     console.log（"这是我的警告信息"）; 
 }
 ```
 
@@ -93,14 +93,13 @@ function warnUser（）： void {
 - 不会有返回值。通常用于函数表达式或箭头函数表达式的返回类型抛出异常或永不返回的异常。
 
 ### Object
-- object是一种类型的，不可以直接给类型为object的对象赋值原始类型。
+- object表示非原始类型，也就是除number，string，boolean，symbol，null或undefined之外的类型。不可以直接给类型为object的对象赋值原始类型。
 例子
 ```例子
 declare function create(o: object | null): void;
 
 create({ prop: 0 }); // OK
 create(null); // OK
-
 create(42); // Error
 ```
 
@@ -119,14 +118,35 @@ x = 42;                 // Ok
 
 
 ## 变量声明
-- var let const
-- let 
+- var 声明
+- let 声明
   - 块级作用域
-  - 重定义及屏蔽
-  - 先定义后使用
-- const
-  - 值不可变
+```
+function f(input: boolean) {
+    let a = 100;
 
+    if (input) {
+        let b = a + 1;
+        return b;
+    }
+    return b;//错误
+}
+```
+  - 重定义及屏蔽，即使定义多个仍然
+```
+let x = 10;
+let x = 20; // 错误，不能在1个作用域里多次声明`x`
+```
+  - 先定义后使用
+- const 声明
+  - 值不可变
+```
+  const numLivesForCat = 9;
+  numLivesForCat=10；//错误
+```
+
+补充：readonly vs const
+- 判断该用readonly还是const的方法是看要把它做为变量使用还是做为一个属性。 做为变量使用的话用 const，若做为属性则使用readonly。
 
 ##  变量声明规范
 - var声明有些奇怪的作用域规则,请使用let or const 来代替var
@@ -268,9 +288,6 @@ class Greeter {
 
 
 let greeter = new Greeter("world");
-
-补充：readonly vs const
-- 判断该用readonly还是const的方法是看要把它做为变量使用还是做为一个属性。 做为变量使用的话用 const，若做为属性则使用readonly。
 
 ##  函数
 例
