@@ -1,4 +1,4 @@
-# TypeScript
+# TypeScript 基础入门
 
 ## 类型
 
